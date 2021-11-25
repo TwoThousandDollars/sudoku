@@ -15,10 +15,32 @@ body {
 
 #board {
     display:flex;
+    flex-direction: column;
     margin:auto;
     flex-wrap: wrap;
     width:668px;
     margin-bottom:50px;
+}
+
+.row {
+    display:flex;
+    border-left:2px solid black;
+}
+
+.row:first-child {
+    border-top:2px solid black;
+}
+
+.row:last-child {
+    border-bottom:1px solid black;
+}
+
+.cell:nth-child(3n) {
+    border-right:2px solid black;
+}
+
+.row:nth-child(3n) {
+    border-bottom:1px solid black;
 }
 
 .cell {
@@ -47,24 +69,6 @@ body {
     margin:0;
 }
 
-/* Setting the vertical region borders */
-.cell:nth-child(3n) {
-    border-right:2px solid black;
-}
-
-.cell:nth-child(-n+27):nth-child(n+19),
-.cell:nth-child(-n+54):nth-child(n+46),
-.cell:nth-child(-n+81):nth-child(n+73) {
-    border-bottom:2px solid black;
-}
-
-.cell:nth-child(-n+9):nth-child(n+1) {
-    border-top:2px solid black;
-}
-
-.cell:nth-child(9n+1) {
-    border-left:2px solid black;
-}
 
 /* -------------------------- Number Pad ------------------------------- */
 
@@ -84,4 +88,11 @@ body {
     display:flex;
     justify-content: center;
     align-items: center;
+}
+
+
+/* ---------------------------- highlighted cells ------------------------------- */
+
+.highlighted {
+    background-color:beige;
 }
