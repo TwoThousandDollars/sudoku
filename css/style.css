@@ -1,0 +1,87 @@
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ------------------------ Board outlines and inital board setup ----------------------------- */
+
+#board {
+    display:flex;
+    margin:auto;
+    flex-wrap: wrap;
+    width:668px;
+    margin-bottom:50px;
+}
+
+.cell {
+    width:75px;
+    height:75px;
+    margin-top: -1px;
+    margin-left:-1px;
+    border:.25px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:32px;
+    position:relative;
+}
+
+.pencil-mark--container {
+    position:absolute;
+    display:flex;
+    top:0;
+    left:0;
+    font-size: 14px;
+    margin:5px;
+}
+
+.pencil-mark {
+    margin:0;
+}
+
+/* Setting the vertical region borders */
+.cell:nth-child(3n) {
+    border-right:2px solid black;
+}
+
+.cell:nth-child(-n+27):nth-child(n+19),
+.cell:nth-child(-n+54):nth-child(n+46),
+.cell:nth-child(-n+81):nth-child(n+73) {
+    border-bottom:2px solid black;
+}
+
+.cell:nth-child(-n+9):nth-child(n+1) {
+    border-top:2px solid black;
+}
+
+.cell:nth-child(9n+1) {
+    border-left:2px solid black;
+}
+
+/* -------------------------- Number Pad ------------------------------- */
+
+#numpad {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    width:270px;
+
+}
+
+.number {
+    width:75px;
+    height:75px;
+    border:1px solid black;
+    margin:5px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
