@@ -6,7 +6,8 @@ export default class Board {
         this.rows = this.extractRowsFromDocument(),
         this.selectedCell = this.cells[0];
         this.numPad = document.querySelectorAll('.number'),
-        this.writeMode = 'digt';
+        this.modeButton = document.querySelectorAll('#modeButton')
+        this.writeMode = 'digit';
         
         // add event listeners
         this.cells.forEach(cell => {
@@ -16,6 +17,8 @@ export default class Board {
         this.numPad.forEach(button => {
             button.addEventListener('click', this.insertDigit.bind(this));
         });
+
+        this.modeButton.addEventListener('click', this.toggleMode.bind(this));
         
         // initail board setup 
         this.selectedCell.click();
@@ -132,7 +135,17 @@ export default class Board {
     }
 
     updatePencilMarkElement(digit, element) {
-        // if the digit is already present in the element, then delete the digit from the element
-        // update the order of the pencil markings so they're in numerical order
+        let pencilMarks = element.innerText;
+        if (pencilMarks.includes(digit)) {
+            element.innerText = pencilMarks.replace(digit, '');
+        } else {
+            console.log('boobs')
+            element.innerText += digit;
+            this.updateNumericalOrder(element);
+        }
+    }
+    
+    updateNumericalOrder(element) {
+        element.innerText = element.innerText.split('').sort().join('');
     }
 }
