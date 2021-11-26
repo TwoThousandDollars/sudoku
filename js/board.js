@@ -3,10 +3,18 @@ export default class Board {
         // cache dom
         this.gameBoard = document.querySelector("#board"),
         this.cells = document.querySelectorAll(".cell"),
+        this.documentRows = document.querySelectorAll('.row'),
+        this.rows = [],
         
         // add event listeners
         this.cells.forEach(cell => {
             cell.addEventListener('click', this.highlightRelaventCells.bind(this))
+        })
+
+        this.documentRows.forEach(row => {
+            let cleanRow = Array.from(row.childNodes);
+            cleanRow = cleanRow.filter(this.filterOutTextNodes);
+            this.rows.push(cleanRow);
         })
     }
     
@@ -19,13 +27,28 @@ export default class Board {
     }
 
     highlightIndividualCell(cell) {
-        console.log(cell)
         cell.classList.add('highlighted')
     }
 
     highlightColumn(e) {
         // find the index of the element that has been clicked on
         // loop through each row and highlight the element of the same index
+        let column = this.getColumn(e);
+        column.forEach(cell => {
+            this.highlightIndividualCell(cell);
+        })
+    }
+
+    getColumn(e) {
+        let columnNumber = this.getRow(e).indexOf(e.target)
+        let column = [];
+        this.rows.forEach(row => {
+            column.push(row[columnNumber]);
+        });
+        return column;
+        // find the row where the cell is in
+        // find the index of the cell within that row
+
     }
 
     highlightRow(e) {
@@ -33,8 +56,6 @@ export default class Board {
         row.forEach(cell => {
             this.highlightIndividualCell(cell);
         })
-        // find the index of the row that the cell belongs in 
-        // highlight the entire row 
     }
 
     getRow(e) {
