@@ -3,19 +3,23 @@ export default class Board {
         // cache dom
         this.gameBoard = document.querySelector("#board"),
         this.cells = document.querySelectorAll(".cell"),
-        this.documentRows = document.querySelectorAll('.row'),
-        this.rows = [],
+        this.rows = this.extractRowsFromDocument();
         
         // add event listeners
         this.cells.forEach(cell => {
             cell.addEventListener('click', this.highlightRelaventCells.bind(this))
         })
+    }
 
-        this.documentRows.forEach(row => {
+    extractRowsFromDocument() {
+        let documentRows = document.querySelectorAll('.row');
+        let rows = [];
+        documentRows.forEach(row => {
             let cleanRow = Array.from(row.childNodes);
             cleanRow = cleanRow.filter(this.filterOutTextNodes);
-            this.rows.push(cleanRow);
-        })
+            rows.push(cleanRow);
+        });
+        return rows;
     }
     
     highlightRelaventCells(e) {
