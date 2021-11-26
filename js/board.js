@@ -6,7 +6,9 @@ export default class Board {
         this.rows = this.extractRowsFromDocument(),
         this.selectedCell = this.cells[0];
         this.numPad = document.querySelectorAll('.number'),
-        this.modeButton = document.querySelectorAll('#modeButton')
+        this.modeButton = document.querySelector('#modeButton'),
+        this.pencilMarkElement = document.createElement('div');
+        this.pencilMarkElement.classList.add('pencil-mark--container');
         this.writeMode = 'digit';
         
         // add event listeners
@@ -22,6 +24,11 @@ export default class Board {
         
         // initail board setup 
         this.selectedCell.click();
+    }
+
+    toggleMode(e) {
+        e.target.innerText = (this.writeMode === 'digit') ? 'Notes: ON' : 'Notes: OFF';
+        this.writeMode = (this.writeMode === 'digit') ? 'pencilMark' : 'digit';
     }
 
     extractRowsFromDocument() {
@@ -43,6 +50,7 @@ export default class Board {
     makeCellSelected(e) {
         this.clearSelectedCells();
         e.target.classList.add('selected');
+        console.log(e.target);
         this.selectedCell = e.target;
     }
 
@@ -120,9 +128,13 @@ export default class Board {
     }
 
     insertDigit(e) {
+        let digitTextContainerElement = this.selectedCell.childNodes[3];
+        let pencilMarkTextContainerElement = this.selectedCell.childNodes[1];
         if (this.writeMode === 'digit') {
-            this.selectedCell.innerText = e.target.innerText;
+            this.clearTextFromElement(pencilMarkTextContainerElement);
+            digitTextContainerElement.innerText = e.target.innerText;
         } else {
+            this.clearTextFromElement(digitTextContainerElement);
             this.insertPencilMark(e);
         }
     }
@@ -130,7 +142,6 @@ export default class Board {
     insertPencilMark(e) {
         let numPadDigit = e.target.innerText;
         let pencilMarkElement = this.selectedCell.childNodes[1];
-        // pencilMarkElement.innerText += numPadDigit;
         this.updatePencilMarkElement(numPadDigit,pencilMarkElement);
     }
 
@@ -139,7 +150,6 @@ export default class Board {
         if (pencilMarks.includes(digit)) {
             element.innerText = pencilMarks.replace(digit, '');
         } else {
-            console.log('boobs')
             element.innerText += digit;
             this.updateNumericalOrder(element);
         }
@@ -147,5 +157,9 @@ export default class Board {
     
     updateNumericalOrder(element) {
         element.innerText = element.innerText.split('').sort().join('');
+    }
+
+    clearTextFromElement(element) {
+        element.innerText = '';
     }
 }
