@@ -3,12 +3,22 @@ export default class Board {
         // cache dom
         this.gameBoard = document.querySelector("#board"),
         this.cells = document.querySelectorAll(".cell"),
-        this.rows = this.extractRowsFromDocument();
+        this.rows = this.extractRowsFromDocument(),
+        this.selectedCell = this.cells[0];
+        this.numPad = document.querySelectorAll('.number'),
+        this.writeMode = 'digt';
         
         // add event listeners
         this.cells.forEach(cell => {
-            cell.addEventListener('click', this.highlightRelaventCells.bind(this))
-        })
+            cell.addEventListener('click', this.updateRelevantCells.bind(this))
+        });
+        
+        this.numPad.forEach(button => {
+            button.addEventListener('click', this.insertDigit.bind(this));
+        });
+        
+        // initail board setup 
+        this.selectedCell.click();
     }
 
     extractRowsFromDocument() {
@@ -22,8 +32,23 @@ export default class Board {
         return rows;
     }
     
-    highlightRelaventCells(e) {
-        this.clearHighlightedCells();
+    updateRelevantCells(e) {
+        this.highlightAllRelevantCells(e)
+        this.makeCellSelected(e);
+    }
+
+    makeCellSelected(e) {
+        this.clearSelectedCells();
+        e.target.classList.add('selected');
+        this.selectedCell = e.target;
+    }
+
+    clearSelectedCells() {
+        this.clearClassFromCells('selected');
+    }
+
+    highlightAllRelevantCells(e) {
+        this.clearClassFromCells('highlighted');
         this.highlightColumn(e);
         this.highlightRow(e);
         this.highlightRegion(e);
@@ -86,7 +111,28 @@ export default class Board {
     highlightIndividualCell(cell) {
         cell.classList.add('highlighted')
     }
-    clearHighlightedCells() {
-        this.cells.forEach(cell => { cell.classList.remove('highlighted')})
+    
+    clearClassFromCells(className) {
+        this.cells.forEach(cell => { cell.classList.remove(className)})
+    }
+
+    insertDigit(e) {
+        if (this.writeMode === 'digit') {
+            this.selectedCell.innerText = e.target.innerText;
+        } else {
+            this.insertPencilMark(e);
+        }
+    }
+
+    insertPencilMark(e) {
+        let numPadDigit = e.target.innerText;
+        let pencilMarkElement = this.selectedCell.childNodes[1];
+        // pencilMarkElement.innerText += numPadDigit;
+        this.updatePencilMarkElement(numPadDigit,pencilMarkElement);
+    }
+
+    updatePencilMarkElement(digit, element) {
+        // if the digit is already present in the element, then delete the digit from the element
+        // update the order of the pencil markings so they're in numerical order
     }
 }
