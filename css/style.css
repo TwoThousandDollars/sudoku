@@ -57,6 +57,10 @@ body {
     position:relative;
 }
 
+.cell:hover {
+    cursor: pointer;
+}
+
 .pencil-mark--container {
     position:absolute;
     display:flex;

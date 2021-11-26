@@ -43,14 +43,18 @@ export default class Board {
     }
     
     updateRelevantCells(e) {
-        this.highlightAllRelevantCells(e)
-        this.makeCellSelected(e);
+        if (e.target.classList.contains('cell')) {
+            this.highlightAllRelevantCells(e)
+            this.makeCellSelected(e);
+        } else {
+            let parentCell = e.target.parentNode;
+            parentCell.click();
+        }
     }
 
     makeCellSelected(e) {
         this.clearSelectedCells();
         e.target.classList.add('selected');
-        console.log(e.target);
         this.selectedCell = e.target;
     }
 
