@@ -95,7 +95,8 @@ body {
     align-items: center;
 }
 
-.number:hover {
+.number:hover,
+#modeButton:hover {
     cursor:pointer;
     background-color: ghostwhite;
 }
