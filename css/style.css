@@ -96,16 +96,19 @@ body {
 }
 
 .number:hover,
-#modeButton:hover {
+#modeButton:hover,
+#validate:hover {
     cursor:pointer;
     background-color: ghostwhite;
 }
 
-#modeButton {
+#modeButton,
+#validate {
     width:90%;
     text-align: center;
     border:1px solid black;
     padding:10px;
+    margin:5px 0;
 }
 
 
